@@ -36,7 +36,6 @@ public class ChatServer {
 
     public void subscribe(ClientHandler client) {
         clients.add(client);//добавили клиента, который только что залогинился
-
     }
 
     public boolean isNickBusy(String nick) {

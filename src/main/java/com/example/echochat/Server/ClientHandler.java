@@ -35,17 +35,18 @@ public class ClientHandler {
     }
 
     private void authenticate() {// пусть команда аутинтефикации будет /auth login1 pass1(разделены пробелами)
-        while (true){
+        while (true) {
             try {
                 final String message = in.readUTF();
-                if (message.startsWith("/auth")){
+                if (message.startsWith("/auth")) {
                     //должны разделить это сообщение по пробелам
                     final String[] split = message.split("\\p{Blank}+");
                     final String login = split[1];
                     final String password = split[2];
                     final String nick = authService.getNickByLoginAndPassword(login, password);
-                    if (nick != null){
-                        if (server.isNickBusy(nick)){
+                    System.out.println("Ник " + nick);
+                    if (nick != null) {
+                        if (server.isNickBusy(nick)) {
                             sendMessage("Пользователь уже авторизован");
                             continue;
                         }
@@ -94,25 +95,29 @@ public class ClientHandler {
         try {
             out.writeUTF(message);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
+            // e.printStackTrace();
         }
     }
 
     private void readMessage() {
         //должна быть проверка. Если сообщение начинается с /w... то получить должен пользователь с этим ником(2,34,00)
         //метод который возвращает ник, кому отправить сообщение
-        while (true) {
-            try {
+        try {
+            while (true) {
                 final String message = in.readUTF();
                 if ("/end".equals(message)) {
                     break;
                 }
                 server.broadcast(nick + ": " + message);//метод разослать всем
-            } catch (IOException e) {
-                e.printStackTrace();
+                out.writeUTF(message);
             }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
+
 
     public String getNick() {
         return nick;

@@ -35,7 +35,6 @@ private List<UserData> users;//это поле содержит список э�
         for (int i = 0; i < 5; i++) {//5 пользователей
 users.add(new UserData("nick" + i,"login" + i, "pass" + i));
         }
-
     }
 
     @Override
@@ -49,8 +48,7 @@ users.add(new UserData("nick" + i,"login" + i, "pass" + i));
     }
 
     @Override
-    public void close() throws IOException {
+    public void close()/* throws IOException*/ {
         System.out.println("Сервис аутентификации восстановлен");
-
     }
 }

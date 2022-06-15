@@ -40,7 +40,7 @@ public class ChatClient {
             final String message;
             try {
                 message = in.readUTF();
-                if (message.startsWith("/authok")) {///authOK nick1
+                if (message.startsWith("/auth")) {///authOK nick1
                     final String[] split = message.split("\\p{Blank}+");
                     final String nick = split[1];
                     controller.setAuth(true);

@@ -73,6 +73,8 @@ public class ChatController {
         messageBox.setVisible(success);
     }
     public void signinBtnClick() {
+
         client.sendMessage("/auth" + LoginField.getText() + " " + PasswordField.getText());
+
     }
 }
